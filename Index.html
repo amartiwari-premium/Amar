@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Natural Product</title>
+
+<style>
+body{
+font-family: Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+background:white;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.product{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.product img{
+width:350px;
+border-radius:10px;
+}
+
+.details{
+flex:1;
+}
+
+h1{
+color:#2e7d32;
+}
+
+.price{
+font-size:22px;
+font-weight:bold;
+margin:10px 0;
+}
+
+input{
+padding:8px;
+margin:5px 0;
+width:100%;
+}
+
+button{
+padding:10px 15px;
+background:#2e7d32;
+color:white;
+border:none;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#1b5e20;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
+color:red;
+}
+
+.review-box{
+margin-top:40px;
+}
+
+.review{
+background:#f1f1f1;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+}
+
+.star{
+color:gold;
+}
+
+.contact{
+background:#222;
+color:white;
+padding:20px;
+margin-top:40px;
+text-align:center;
+}
+
+.qr{
+display:none;
+margin-top:20px;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="product">
+
+<img src="product.png" alt="Product">
+
+<div class="details">
+<h1>100% Natural Premium Product</h1>
+<p>Good For Health</p>
+<p class="star">⭐⭐⭐⭐⭐</p>
+
+<div class="price">Price: ₹500 per packet</div>
+
+<label>How many packets?</label>
+<input type="number" id="qty" value="1" min="1" oninput="calculate()">
+
+<div class="total" id="total">Total: ₹500</div>
+
+<button onclick="showPayment()">Pay Now</button>
+
+<div class="qr" id="paymentSection">
+
+<h3>Enter Details</h3>
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="address" placeholder="Address">
+<input type="text" id="phone" placeholder="Phone Number">
+<input type="email" id="email" placeholder="Gmail">
+
+<h3>Scan QR & Pay</h3>
+<img src="qr.png" width="200">
+
+<button onclick="sendSMS()">I Have Paid</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Reviews -->
+<div class="review-box">
+<h2>Customer Reviews ⭐⭐⭐⭐⭐</h2>
+
+<div class="review">
+<strong>Rahul:</strong> Bahut hi accha product hai 👍
+</div>
+
+<div class="review">
+<strong>Priya:</strong> Quality premium hai. Highly recommended ⭐⭐⭐⭐⭐
+</div>
+
+<h3>Add Your Review</h3>
+<input type="text" id="reviewName" placeholder="Your Name">
+<textarea id="reviewText" placeholder="Write Review"></textarea>
+<button onclick="addReview()">Submit Review</button>
+
+<div id="newReviews"></div>
+
+</div>
+
+</div>
+
+
+<div class="contact">
+<h2>Contact Us</h2>
+<p>📞 9721770053</p>
+<p>📧 vishaltiwarisidd@gmail.com</p>
+</div>
+
+
+<script>
+
+let price = 500;
+
+function calculate(){
+let qty = document.getElementById("qty").value;
+let total = qty * price;
+document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+function showPayment(){
+document.getElementById("paymentSection").style.display = "block";
+}
+
+function sendSMS(){
+let name = document.getElementById("name").value;
+let address = document.getElementById("address").value;
+let phone = document.getElementById("phone").value;
+let qty = document.getElementById("qty").value;
+let total = qty * price;
+
+let message = "New Order%0AName: "+name+
+"%0AAddress: "+address+
+"%0APhone: "+phone+
+"%0AQuantity: "+qty+
+"%0ATotal Paid: ₹"+total;
+
+window.location.href = "sms:9721770053?body=" + message;
+}
+
+function addReview(){
+let name = document.getElementById("reviewName").value;
+let text = document.getElementById("reviewText").value;
+
+let reviewDiv = document.createElement("div");
+reviewDiv.className="review";
+reviewDiv.innerHTML = "<strong>"+name+":</strong> "+text;
+
+document.getElementById("newReviews").appendChild(reviewDiv);
+}
+
+</script>
+
+</body>
+</html>
