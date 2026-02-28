@@ -3,75 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Natural Product</title>
+<title>Amar Coffee Powder</title>
 
 <style>
+
 body{
-font-family: Arial;
 margin:0;
-background:#f4f4f4;
+font-family:Arial, sans-serif;
+background:#f5f2ee;
 }
 
 .container{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 padding:20px;
-background:white;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 .product{
 display:flex;
 flex-wrap:wrap;
-gap:20px;
+gap:30px;
+align-items:center;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 .product img{
-width:350px;
+width:100%;
+max-width:400px;
 border-radius:10px;
 }
 
 .details{
 flex:1;
+min-width:280px;
 }
 
 h1{
-color:#2e7d32;
+color:#4b2e2b;
+font-size:28px;
+}
+
+.brand{
+font-size:20px;
+color:#6f4e37;
+font-weight:bold;
+}
+
+.star{
+color:gold;
+font-size:18px;
 }
 
 .price{
 font-size:22px;
 font-weight:bold;
+color:#8b4513;
 margin:10px 0;
 }
 
-input{
-padding:8px;
-margin:5px 0;
+input, textarea{
 width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ccc;
+border-radius:5px;
 }
 
 button{
-padding:10px 15px;
-background:#2e7d32;
-color:white;
+padding:12px;
 border:none;
+border-radius:5px;
 cursor:pointer;
-margin-top:10px;
+background:linear-gradient(to right,#6f4e37,#4b2e2b);
+color:white;
+font-weight:bold;
 }
 
 button:hover{
-background:#1b5e20;
+opacity:0.9;
 }
 
 .total{
 font-size:20px;
-margin-top:10px;
 color:red;
+margin-top:10px;
 }
 
-.review-box{
+.review-section{
 margin-top:40px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 .review{
@@ -81,16 +107,12 @@ margin-top:10px;
 border-radius:5px;
 }
 
-.star{
-color:gold;
-}
-
 .contact{
-background:#222;
+background:#6f4e37;
 color:white;
-padding:20px;
-margin-top:40px;
+padding:30px;
 text-align:center;
+margin-top:40px;
 }
 
 .qr{
@@ -98,6 +120,14 @@ display:none;
 margin-top:20px;
 text-align:center;
 }
+
+@media(max-width:768px){
+.product{
+flex-direction:column;
+text-align:center;
+}
+}
+
 </style>
 </head>
 
@@ -107,31 +137,32 @@ text-align:center;
 
 <div class="product">
 
-<img src="product.png" alt="Product">
+<img src="product.png" alt="Amar Coffee Powder">
 
 <div class="details">
-<h1>100% Natural Premium Product</h1>
-<p>Good For Health</p>
+
+<h1>Amar Coffee Powder</h1>
+<div class="brand">Premium 100% Natural Coffee ☕</div>
 <p class="star">⭐⭐⭐⭐⭐</p>
 
-<div class="price">Price: ₹500 per packet</div>
+<div class="price">450gm = ₹12999</div>
 
 <label>How many packets?</label>
 <input type="number" id="qty" value="1" min="1" oninput="calculate()">
 
-<div class="total" id="total">Total: ₹500</div>
+<div class="total" id="total">Total: ₹12999</div>
 
 <button onclick="showPayment()">Pay Now</button>
 
 <div class="qr" id="paymentSection">
 
-<h3>Enter Details</h3>
+<h3>Enter Your Details</h3>
 <input type="text" id="name" placeholder="Full Name">
 <input type="text" id="address" placeholder="Address">
 <input type="text" id="phone" placeholder="Phone Number">
 <input type="email" id="email" placeholder="Gmail">
 
-<h3>Scan QR & Pay</h3>
+<h3>Scan QR & Complete Payment</h3>
 <img src="qr.png" width="200">
 
 <button onclick="sendSMS()">I Have Paid</button>
@@ -141,20 +172,22 @@ text-align:center;
 </div>
 </div>
 
-
 <!-- Reviews -->
-<div class="review-box">
+
+<div class="review-section">
+
 <h2>Customer Reviews ⭐⭐⭐⭐⭐</h2>
 
 <div class="review">
-<strong>Rahul:</strong> Bahut hi accha product hai 👍
+<strong>Rahul:</strong> Taste amazing hai, bilkul premium quality 👍
 </div>
 
 <div class="review">
-<strong>Priya:</strong> Quality premium hai. Highly recommended ⭐⭐⭐⭐⭐
+<strong>Priya:</strong> Strong aur fresh coffee, paisa vasool ⭐⭐⭐⭐⭐
 </div>
 
 <h3>Add Your Review</h3>
+
 <input type="text" id="reviewName" placeholder="Your Name">
 <textarea id="reviewText" placeholder="Write Review"></textarea>
 <button onclick="addReview()">Submit Review</button>
@@ -165,17 +198,16 @@ text-align:center;
 
 </div>
 
-
 <div class="contact">
 <h2>Contact Us</h2>
 <p>📞 9721770053</p>
 <p>📧 vishaltiwarisidd@gmail.com</p>
+<p>© 2026 Amar Coffee Powder. All Rights Reserved.</p>
 </div>
-
 
 <script>
 
-let price = 500;
+let price = 12999;
 
 function calculate(){
 let qty = document.getElementById("qty").value;
