@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,108 +6,58 @@
 <title>Amar Premium Store</title>
 
 <style>
-
-body{
-margin:0;
-font-family:Arial;
-background:#f5f2ee;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
+body{margin:0;font-family:Arial;background:#f5f2ee;}
+.container{max-width:1200px;margin:auto;padding:20px;}
 .product{
-display:flex;
-flex-wrap:wrap;
-gap:30px;
-align-items:center;
 background:white;
 padding:20px;
+margin-bottom:40px;
 border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
-margin-bottom:40px;
 }
-
 .product img{
 width:100%;
 max-width:350px;
 border-radius:10px;
 }
-
-.details{
-flex:1;
-min-width:280px;
-}
-
-h2{
-color:#4b2e2b;
-}
-
-.star{
-color:gold;
-}
-
-.price{
-font-size:20px;
-color:#8b4513;
-font-weight:bold;
-margin:8px 0;
-}
-
-input{
+h2{color:#4b2e2b;}
+.price{color:#8b4513;font-weight:bold;}
+.star{color:gold;}
+input,textarea,select{
 width:100%;
 padding:10px;
 margin:8px 0;
 border-radius:5px;
 border:1px solid #ccc;
 }
-
 button{
-padding:12px;
+padding:10px;
+background:#6f4e37;
+color:white;
 border:none;
 border-radius:5px;
 cursor:pointer;
-background:linear-gradient(to right,#6f4e37,#4b2e2b);
-color:white;
-font-weight:bold;
 }
-
-.total{
-color:red;
-font-weight:bold;
-margin-top:8px;
-}
-
-.qr{
-display:none;
-margin-top:15px;
-text-align:center;
-}
-
-.review{
-background:#f1f1f1;
-padding:10px;
-margin-top:10px;
-border-radius:5px;
-}
-
+button:hover{opacity:0.9;}
+.total{color:red;font-weight:bold;}
+.qr{display:none;margin-top:15px;text-align:center;}
+.review{background:#eee;padding:10px;margin-top:10px;border-radius:5px;}
 .contact{
 background:#6f4e37;
 color:white;
 text-align:center;
 padding:30px;
 }
-
+.track-box{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+margin-top:40px;
+}
 @media(max-width:768px){
-.product{
-flex-direction:column;
-text-align:center;
+.product{text-align:center;}
 }
-}
-
 </style>
 </head>
 
@@ -116,84 +65,139 @@ text-align:center;
 
 <div class="container">
 
-<!-- COFFEE PRODUCT -->
+<h1>Amar Premium Store ⭐⭐⭐⭐⭐</h1>
+
+<!-- PRODUCT TEMPLATE -->
+<script>
+function calc(id,price){
+let qty=document.getElementById("qty"+id).value;
+document.getElementById("total"+id).innerText="Total: ₹"+(qty*price);
+}
+function showPay(id){
+document.getElementById("pay"+id).style.display="block";
+}
+function placeOrder(id,name,price){
+let qty=document.getElementById("qty"+id).value;
+let orderId="AMAR"+Math.floor(Math.random()*100000);
+localStorage.setItem(orderId,"Processing");
+document.getElementById("orderMsg"+id).innerHTML=
+"Order ID: <b>"+orderId+"</b> (Save this to track)";
+}
+function sendSMS(id,product,price){
+let qty=document.getElementById("qty"+id).value;
+let total=qty*price;
+let msg="New Order%0AProduct:"+product+
+"%0AQty:"+qty+
+"%0ATotal:₹"+total;
+window.location.href="sms:9721770053?body="+msg;
+}
+function addReview(){
+let name=document.getElementById("rname").value;
+let rating=document.getElementById("rating").value;
+let text=document.getElementById("rtext").value;
+let div=document.createElement("div");
+div.className="review";
+div.innerHTML="<b>"+name+"</b> "+rating+"<br>"+text;
+document.getElementById("newReviews").appendChild(div);
+}
+function trackOrder(){
+let id=document.getElementById("trackId").value;
+let status=localStorage.getItem(id);
+if(status){
+document.getElementById("trackResult").innerText="Order Status: "+status;
+}else{
+document.getElementById("trackResult").innerText="Order Not Found!";
+}
+}
+function cancelOrder(){
+let id=document.getElementById("trackId").value;
+if(localStorage.getItem(id)){
+localStorage.setItem(id,"Cancelled ❌");
+document.getElementById("trackResult").innerText="Order Cancelled Successfully!";
+}else{
+document.getElementById("trackResult").innerText="Order Not Found!";
+}
+}
+</script>
+
+<!-- COFFEE -->
 <div class="product">
-<img src="product.png">
-<div class="details">
 <h2>Amar Coffee Powder (450gm)</h2>
+<img src="product.png">
 <p>100% Natural • Good For Health</p>
 <p class="star">⭐⭐⭐⭐⭐</p>
 <div class="price">₹12999</div>
-
 <input type="number" id="qty1" value="1" min="1" oninput="calc(1,12999)">
 <div class="total" id="total1">Total: ₹12999</div>
-
 <button onclick="showPay(1)">Pay Now</button>
-
 <div class="qr" id="pay1">
-<input type="text" id="name1" placeholder="Full Name">
-<input type="text" id="address1" placeholder="Address">
-<input type="text" id="phone1" placeholder="Phone">
 <img src="qr.png" width="200">
+<button onclick="placeOrder(1,'Coffee',12999)">Generate Order ID</button>
 <button onclick="sendSMS(1,'Amar Coffee Powder',12999)">I Have Paid</button>
+<p id="orderMsg1"></p>
+</div>
+<div class="review"><b>Rahul:</b> Amazing taste ⭐⭐⭐⭐⭐</div>
 </div>
 
-<div class="review"><b>Rahul:</b> Premium coffee taste 🔥</div>
-</div>
-</div>
-
-
-<!-- KALANAMAK PRODUCT -->
+<!-- KALANAMAK -->
 <div class="product">
-<img src="kalanamak.png">
-<div class="details">
 <h2>Amar Kalanamak Rice (5kg)</h2>
+<img src="kalanamk.png">
 <p>100% Natural • Good For Health</p>
 <p class="star">⭐⭐⭐⭐⭐</p>
 <div class="price">₹8999</div>
-
 <input type="number" id="qty2" value="1" min="1" oninput="calc(2,8999)">
 <div class="total" id="total2">Total: ₹8999</div>
-
 <button onclick="showPay(2)">Pay Now</button>
-
 <div class="qr" id="pay2">
-<input type="text" id="name2" placeholder="Full Name">
-<input type="text" id="address2" placeholder="Address">
-<input type="text" id="phone2" placeholder="Phone">
 <img src="qr.png" width="200">
+<button onclick="placeOrder(2,'Kalanamak',8999)">Generate Order ID</button>
 <button onclick="sendSMS(2,'Amar Kalanamak Rice',8999)">I Have Paid</button>
+<p id="orderMsg2"></p>
+</div>
+<div class="review"><b>Amit:</b> Sugandhit chawal ⭐⭐⭐⭐⭐</div>
 </div>
 
-<div class="review"><b>Amit:</b> Bahut hi sugandhit chawal ⭐⭐⭐⭐⭐</div>
-</div>
-</div>
-
-
-<!-- BASMATI PRODUCT -->
+<!-- BASMATI -->
 <div class="product">
-<img src="basmati.png">
-<div class="details">
 <h2>Amar Basmati Rice (5kg)</h2>
+<img src="basmati.png">
 <p>100% Natural • Good For Health</p>
 <p class="star">⭐⭐⭐⭐⭐</p>
 <div class="price">₹6999</div>
-
 <input type="number" id="qty3" value="1" min="1" oninput="calc(3,6999)">
 <div class="total" id="total3">Total: ₹6999</div>
-
 <button onclick="showPay(3)">Pay Now</button>
-
 <div class="qr" id="pay3">
-<input type="text" id="name3" placeholder="Full Name">
-<input type="text" id="address3" placeholder="Address">
-<input type="text" id="phone3" placeholder="Phone">
 <img src="qr.png" width="200">
+<button onclick="placeOrder(3,'Basmati',6999)">Generate Order ID</button>
 <button onclick="sendSMS(3,'Amar Basmati Rice',6999)">I Have Paid</button>
+<p id="orderMsg3"></p>
+</div>
+<div class="review"><b>Priya:</b> Long grain best quality ⭐⭐⭐⭐⭐</div>
 </div>
 
-<div class="review"><b>Priya:</b> Long grain aur best quality 🌟🌟🌟🌟🌟</div>
+<!-- REVIEW SECTION -->
+<div class="product">
+<h2>Customer Reviews ⭐⭐⭐⭐⭐</h2>
+<input type="text" id="rname" placeholder="Your Name">
+<select id="rating">
+<option>⭐⭐⭐⭐⭐</option>
+<option>⭐⭐⭐⭐</option>
+<option>⭐⭐⭐</option>
+</select>
+<textarea id="rtext" placeholder="Write Review"></textarea>
+<button onclick="addReview()">Submit Review</button>
+<div id="newReviews"></div>
 </div>
+
+<!-- TRACK ORDER -->
+<div class="track-box">
+<h2>Track / Cancel Order</h2>
+<input type="text" id="trackId" placeholder="Enter Order ID">
+<button onclick="trackOrder()">Track</button>
+<button onclick="cancelOrder()">Cancel</button>
+<p id="trackResult"></p>
 </div>
 
 </div>
@@ -205,35 +209,6 @@ text-align:center;
 <p>© 2026 Amar Premium Store</p>
 </div>
 
-<script>
-
-function calc(id,price){
-let qty=document.getElementById("qty"+id).value;
-document.getElementById("total"+id).innerText="Total: ₹"+(qty*price);
-}
-
-function showPay(id){
-document.getElementById("pay"+id).style.display="block";
-}
-
-function sendSMS(id,product,price){
-let name=document.getElementById("name"+id).value;
-let address=document.getElementById("address"+id).value;
-let phone=document.getElementById("phone"+id).value;
-let qty=document.getElementById("qty"+id).value;
-let total=qty*price;
-
-let msg="New Order%0AProduct: "+product+
-"%0AName: "+name+
-"%0AAddress: "+address+
-"%0APhone: "+phone+
-"%0AQty: "+qty+
-"%0ATotal Paid: ₹"+total;
-
-window.location.href="sms:9721770053?body="+msg;
-}
-
-</script>
-
 </body>
 </html>
+
